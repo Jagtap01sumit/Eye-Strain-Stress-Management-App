@@ -1,0 +1,29 @@
+{
+    "project_info": {
+        "project_number": "442511264404",
+        "project_id": "eyestrain-169d7",
+        "storage_bucket": "eyestrain-169d7.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:442511264404:android:3084af67198de03dd90281",
+                "android_client_info": {
+                    "package_name": "com.project.eyestrain"
+                }
+            },
+            "oauth_client": [],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyBigtUwpYt4hfNgsM6kI3CcoBIis_Vctpo"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

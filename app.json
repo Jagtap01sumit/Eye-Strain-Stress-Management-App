@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "navigations",
-    "slug": "navigations",
+    "slug": "eyestrain",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,7 +12,7 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "*/"
     ],
     "ios": {
       "supportsTablet": true
@@ -21,10 +21,18 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.project.eyestrain",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "38a54c1a-340f-43fb-a60c-2c9bf5b74bd3"
+      }
+    },
+    "owner": "prajakta_sangolkar"
   }
 }
