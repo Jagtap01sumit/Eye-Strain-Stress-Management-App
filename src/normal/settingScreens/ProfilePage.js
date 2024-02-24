@@ -1,136 +1,115 @@
-import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  Button,
   Image,
+  ImageBackground,
+  Pressable,
   StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-
-const ProfilePage = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [selectedProfile, setSelectedProfile] = useState(null);
-  const [photo, setPhoto] = useState(null); // Added photo state
-
-  const handlePhotoSelect = (profileType) => {
-    // Implement logic to set the selected profile type
-    setSelectedProfile(profileType);
-  };
-
-  const handlePhotoUpload = () => {
-    // Implement your photo upload logic here
-    // For simplicity, setting a placeholder image based on the selected profile
-    const placeholderImage =
-      selectedProfile === "boy"
-        ? "https://example.com/boy-placeholder-image.jpg"
-        : "https://example.com/girl-placeholder-image.jpg";
-    setPhoto(placeholderImage);
+import Modal from "react-native-modal";
+import { AntDesign } from "@expo/vector-icons";
+import React, { useState } from "react";
+import FeatherIcon from "react-native-vector-icons/Feather";
+import { useNavigation } from "@react-navigation/native";
+import EditProfileScreen from "./EditProfileScreen";
+export default function ProfilePage() {
+  const navigation = useNavigation();
+  const [visible, setVisible] = useState(false);
+  const closeOptions = () => {
+    setVisible(false);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.profileContainer}>
-        <TouchableOpacity onPress={() => handlePhotoSelect("boy")}>
-          <Image
-            source={{ uri: "https://example.com/boy-icon.jpg" }}
-            style={styles.profileIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePhotoSelect("girl")}>
-          <Image
-            source={{ uri: "https://example.com/girl-icon.jpg" }}
-            style={styles.profileIcon}
-          />
+    <ImageBackground
+      source={require("../../../assets/bg1.jpg")}
+      style={{ flex: 1, resizeMode: "cover" }}
+    >
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 20,
+          margin: 10,
+          padding: 10,
+        }}
+      >
+        <Text></Text>
+        <TouchableOpacity onPress={() => setVisible(true)}>
+          <AntDesign name="edit" size={24} color="black" />
         </TouchableOpacity>
       </View>
-
-      <View style={styles.formContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={name}
-          onChangeText={(text) => setName(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          keyboardType="email-address"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Age"
-          value={age}
-          onChangeText={(text) => setAge(text)}
-          keyboardType="numeric"
-        />
-
-        <Button title="Upload Photo" onPress={handlePhotoUpload} />
-
-        {photo && <Image source={{ uri: photo }} style={styles.profileImage} />}
+      <View style={{ display: "flex", alignItems: "center", marginTop: 30 }}>
+        <View onPress={() => {}}>
+          <View style={{ position: "relative" }}>
+            <Image
+              alt=""
+              source={{
+                uri: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80",
+              }}
+              style={{ width: 160, height: 160, borderRadius: 9999 }}
+            />
+          </View>
+        </View>
       </View>
-    </View>
+      <View style={{ marginTop: 50, margin: 10 }}>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>User Name</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>Email address</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>Phone no.</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>Birthdate</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>Gender</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>Address</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 24 }}>mala pn ny mahit ha section</Text>
+          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
+        </View>
+      </View>
+      {visible ? (
+        <Modal
+          isVisible={true}
+          style={{ margin: 0, width: "100%" }}
+          onTouchCancel={closeOptions}
+          onBackdropPress={closeOptions}
+          onBackButtonPress={closeOptions}
+        >
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              height: 550,
+              backgroundColor: "white",
+              width: "100%",
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+
+              padding: 10,
+            }}
+          >
+            <EditProfileScreen closeOptions={closeOptions} />
+          </View>
+        </Modal>
+      ) : null}
+    </ImageBackground>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    padding: 20,
-    display: "flex",
-    flexDirection: "row", // Horizontal layout
-    justifyContent: "center",
-  },
-  profileContainer: {
-    // flex: 1,
-    marginRight: 10, // Adjust as needed
-    justifyContent: "center",
-    marginTop: 40,
-    alignItems: "center",
-  },
-  formContainer: {
-    flex: 1,
-    marginLeft: 10, // Adjust as needed
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-  },
-  profileIcon: {
-    width: 100,
-    height: 100,
-    resizeMode: "cover",
-    borderRadius: 50,
-    margin: 10,
-  },
-  profileImage: {
-    marginTop: 20,
-    width: 200,
-    height: 200,
-    resizeMode: "cover",
-    borderRadius: 100,
-  },
-});
-
-export default ProfilePage;
+const styles = StyleSheet.create({});
