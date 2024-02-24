@@ -33,7 +33,7 @@ export default function Setting() {
 
               paddingVertical: 24,
               marginTop: 10,
-              backgroundColor: "#F87171",
+              backgroundColor: "#c3c8d3",
               borderRadius: 10,
 
               margin: 10,

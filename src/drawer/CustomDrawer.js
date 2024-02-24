@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, Animated } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Animated,
+  ImageBackground,
+} from "react-native";
 import React, { useRef, useState } from "react";
 import {
   TouchableOpacity,
@@ -46,7 +53,7 @@ export default function CustomDrawer() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* menu design  */}
-      <View style={{ flex: 1, backgroundColor: "#6600ff" }}>
+      <View style={{ flex: 1, backgroundColor: "#666f80" }}>
         <View
           style={{ width: "100", flexDirection: "row", alignItems: "center" }}
         >
@@ -90,7 +97,7 @@ export default function CustomDrawer() {
                   marginLeft: 20,
                   marginTop: 20,
                   backgroundColor:
-                    selectedMenuItem === index ? "#fff" : "#6600ff",
+                    selectedMenuItem === index ? "#fff" : "#c3c8d4",
                   borderRadius: 10,
                   alignItems: "center",
                   flexDirection: "row",
@@ -100,14 +107,14 @@ export default function CustomDrawer() {
                 <AntDesign
                   name={item.icon}
                   size={24}
-                  color={selectedMenuItem === index ? "#000" : "#fff"}
+                  color={selectedMenuItem === index ? "#000" : "#000"}
                   style={{ marginLeft: 20 }}
                 />
                 <Text
                   style={{
                     fontSize: 18,
                     marginLeft: 20,
-                    color: selectedMenuItem == index ? "#000" : "#fff",
+                    color: selectedMenuItem == index ? "#000" : "#000",
                   }}
                 >
                   {item.title}
@@ -126,6 +133,7 @@ export default function CustomDrawer() {
           top: 0,
           left: 0,
           right: 0,
+
           bottom: 0,
           transform: [{ scale: scale }, { translateX: moveToRight }],
           borderRadius: showMenu ? 15 : 0,
@@ -139,24 +147,31 @@ export default function CustomDrawer() {
                 style={{ width: 70, height: 30 }}
               />
             ) : (
-              <Image
-                source={require("../../assets/logo.jpeg")}
-                style={{ width: 30, height: 30 }}
-              />
+              <AntDesign name="menu-unfold" size={24} color="black" />
             )}
           </TouchableOpacity>
-          <Text style={{ marginLeft: 20, fontSize: 20, fontWeight: "800" }}>
+          <Text
+            style={{
+              marginLeft: 20,
+              fontSize: 20,
+              fontWeight: "800",
+            }}
+          >
             {menu[selectedMenuItem].title}
           </Text>
         </View>
-        <View>
-          {selectedMenuItem === 0 && <Home />}
-          {selectedMenuItem === 1 && <BlinkRate />}
-          {selectedMenuItem === 2 && <Distance />}
-          {selectedMenuItem === 3 && <DigitalWellbeing />}
-          {selectedMenuItem === 4 && <Setting />}
-        </View>
-
+        <ImageBackground
+          source={require("../../assets/bg1.jpg")}
+          style={{ flex: 1, resizeMode: "cover" }}
+        >
+          <View style={{ backgroundColor: "transparent" }}>
+            {selectedMenuItem === 0 && <Home />}
+            {selectedMenuItem === 1 && <BlinkRate />}
+            {selectedMenuItem === 2 && <Distance />}
+            {selectedMenuItem === 3 && <DigitalWellbeing />}
+            {selectedMenuItem === 4 && <Setting />}
+          </View>
+        </ImageBackground>
         {/* <BottomNavigation /> */}
       </Animated.View>
     </GestureHandlerRootView>
