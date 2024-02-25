@@ -20,6 +20,7 @@ import BlinkRate from "./Screens/BinkRate";
 import DigitalWellbeing from "./Screens/DigitalWellbeing";
 import Distance from "./Screens/Distance";
 import Setting from "./Screens/Setting";
+import Blinkcount from "./Screens/Blinkcount";
 
 export default function CustomDrawer() {
   const menu = [
@@ -27,6 +28,7 @@ export default function CustomDrawer() {
     { icon: "home", title: "Blink Rate" },
     { icon: "home", title: "Distance" },
     { icon: "home", title: "DigitalWellbeing" },
+    { icon: "home", title: "BlinkCount" },
     { icon: "logout", title: "Setting" },
   ];
   const [showMenu, setShowMenu] = useState(false);
@@ -169,7 +171,8 @@ export default function CustomDrawer() {
             {selectedMenuItem === 1 && <BlinkRate />}
             {selectedMenuItem === 2 && <Distance />}
             {selectedMenuItem === 3 && <DigitalWellbeing />}
-            {selectedMenuItem === 4 && <Setting />}
+            {selectedMenuItem === 4 && <Blinkcount />}
+            {selectedMenuItem === 5 && <Setting />}
           </View>
         </ImageBackground>
         {/* <BottomNavigation /> */}

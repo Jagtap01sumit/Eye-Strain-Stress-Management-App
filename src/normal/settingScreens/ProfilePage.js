@@ -13,8 +13,10 @@ import React, { useState } from "react";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import EditProfileScreen from "./EditProfileScreen";
+import { RawButton } from "react-native-gesture-handler";
 export default function ProfilePage() {
   const navigation = useNavigation();
+
   const [visible, setVisible] = useState(false);
   const closeOptions = () => {
     setVisible(false);
@@ -35,7 +37,7 @@ export default function ProfilePage() {
           padding: 10,
         }}
       >
-        <Text></Text>
+
         <TouchableOpacity onPress={() => setVisible(true)}>
           <AntDesign name="edit" size={24} color="black" />
         </TouchableOpacity>
@@ -113,3 +115,4 @@ export default function ProfilePage() {
 }
 
 const styles = StyleSheet.create({});
+

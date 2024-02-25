@@ -22,6 +22,7 @@ export default function Setting() {
       {settingMenu.map((item, index) => (
         <TouchableOpacity
           index={index}
+          key={index}
           onPress={() => {
             navigation.navigate(item.route);
           }}
@@ -65,3 +66,4 @@ export default function Setting() {
 }
 
 const styles = StyleSheet.create({});
+

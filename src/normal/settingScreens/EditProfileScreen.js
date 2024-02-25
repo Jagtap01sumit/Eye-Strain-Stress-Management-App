@@ -1,22 +1,25 @@
-import { SafeAreaView, StyleSheet, Text, View, TextInput } from "react-native";
-import { RadioButton } from "react-native-paper";
+import { SafeAreaView, StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { Icon, IconButton, RadioButton } from "react-native-paper";
 import React from "react";
 import { useForm, Controller, FormProvider } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 import {
   AntDesign,
   MaterialIcons,
   EvilIcons,
   Entypo,
 } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { RawButton, TouchableOpacity } from "react-native-gesture-handler";
 import { setNativeProps } from "react-native-reanimated";
 export default function EditProfileScreen(props) {
   const methods = useForm();
   const { control, handleSubmit, formState, setError } = methods;
-
+  const navigation = useNavigation(); 
   const onSubmit = () => {
     console.log("Save button clicked!");
     props.closeOptions();
+    navigation.goBack(); 
+    console.log("closeOptions called");
   };
 
   return (
@@ -27,6 +30,16 @@ export default function EditProfileScreen(props) {
         justifyContent: "center",
       }}
     >
+           {/* <TouchableOpacity  onPress={(e)=>{console.log("DODODODODOD")}}>
+            <Text>SAVE KAR</Text>
+          </TouchableOpacity> */}
+        <TouchableOpacity onPress={e => {
+          navigation.goBack()
+          
+        }}>
+          <Text>Back</Text>
+        </TouchableOpacity>
+
       <Text style={{ fontSize: 17, fontWeight: "800" }}>Edit Your Profile</Text>
       <FormProvider {...methods}>
         <View style={{ marginTop: 50 }}>
@@ -142,6 +155,12 @@ export default function EditProfileScreen(props) {
                     label="Male"
                     value="male"
                     status={value === "male" ? "checked" : "unchecked"}
+                    onLongPress={()=>{    
+                      console.log("Save button clicked!");
+                    props.closeOptions();
+                    navigation.goBack(); 
+                    console.log("closeOptions called");
+                  }}
                     onPress={() => onChange("male")}
                   />
                   <RadioButton.Item
@@ -190,6 +209,7 @@ export default function EditProfileScreen(props) {
               name="address"
             />
           </View>
+          
 
           <View style={{ alignItems: "center", marginTop: 20 }}>
             <TouchableOpacity
@@ -205,14 +225,30 @@ export default function EditProfileScreen(props) {
                 borderRadius: 6,
               }}
               // onPress={handleSubmit(onSubmit)}
-              onPress={onSubmit}
+              onPress={async () => {
+                try {
+                  console.log("Save button clicked!");
+                  props.closeOptions();
+                  await navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'ProfilePage' }],
+                  });
+                  console.log("Navigating to ProfilePage");
+                } catch (error) {
+                  console.error("Error navigating:", error);
+                }
+              }}
             >
+            
               <Text
                 style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
               >
                 Save
               </Text>
+              
+              
             </TouchableOpacity>
+          
           </View>
         </View>
       </FormProvider>

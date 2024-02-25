@@ -31,6 +31,7 @@ export default function Login() {
       if (response.ok) {
         methods.reset();
         console.log("login successful");
+        
         navigation.navigate("WelcomeScreen");
       } else {
         setError("message", {
