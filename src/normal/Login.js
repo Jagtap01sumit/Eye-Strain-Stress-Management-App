@@ -17,7 +17,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://192.168.0.103:8000/login", {
+      const response = await fetch("http://192.168.29.34:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

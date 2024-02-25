@@ -18,23 +18,23 @@ export default function DigitalWellbeing() {
       color: "#E4405F",
       value: 20,
       content:
-        "Instagram boasts 1 billion active users globally. Its one of the top social media platforms for sharing photos and videos. Over 95 million photos and videos are shared on Instagram every day",
+        "Instagram boasts 1 billion active users globally. Its one of the top social media platforms for sharing photos and videos. Over 95 million photos and videos are shared on Instagram every day.",
     },
     {
       platform: "facebook",
-      icon: "facebook",
+      icon: "facebook-square",
       color: "#1877F2",
       value: 30,
       content:
-        "With a massive user base of 2.8 billion monthly active users. Users engage in various activities, including sharing updates, photos, and connecting with friends. On average, over 4.5 billion likes are given each day on Facebook",
+        "With a massive user base of 2.8 billion monthly active users. Users engage in various activities, including sharing updates, photos, and connecting with friends.",
     },
     {
       platform: "youtube",
-      icon: "youtube",
+      icon: "youtube-square",
       color: "#FF0000",
       value: 40,
       content:
-        "YouTube is the go-to platform for video content, with 2 billion  users. Over 500 hours of video are uploaded to YouTube every minute. It's a hub for diverse content, from tutorials to entertainment, with more than 1 billion hours of YouTube videos watched daily.",
+        "YouTube is the go-to platform for video content, with 2 billion  users. Over 500 hours of video are uploaded to YouTube every minute. It's a hub for diverse content, from tutorials to entertainment.",
     },
     {
       platform: "game-controller",
@@ -42,7 +42,7 @@ export default function DigitalWellbeing() {
       color: "#3498DB",
       value: 50,
       content:
-        "Gaming is a global phenomenon, and game controllers play a crucial role. There are over 2.7 billion gamers worldwide. The gaming industry generates billions in revenue annually, with gamers spending countless hours immersed in virtual worlds. Esports, competitive gaming, has a growing fanbase with millions tuning in for tournaments.",
+        "Gaming is a global phenomenon, and game controllers play a crucial role. There are over 2.7 billion gamers worldwide. The gaming industry generates billions in revenue annually.",
     },
     {
       platform: "snapchat-square",
@@ -50,14 +50,14 @@ export default function DigitalWellbeing() {
       color: "#ffbc00",
       value: 100,
       content:
-        "Snapchat, known for its disappearing messages, has over 500 million monthly active users. It's a popular platform among younger audiences for its creative features like filters and stories. More than 5 billion snaps are created every day, making Snapchat a dynamic and engaging social platform.",
+        "Snapchat, known for its disappearing messages, has over 500 million monthly active users. It's a popular platform among younger audiences for its creative features like filters and stories.",
     },
   ];
 
   const renderItem = ({ item }) => (
     <View style={{ marginTop: 10 }}>
       <View style={styles.itemContainer}>
-        <FontAwesome name={item.icon} size={80} color={item.color} />
+        <FontAwesome name={item.icon} size={50} color={item.color} />
         <View style={styles.itemContent}>
           <Text style={styles.platformText}>{item.platform}</Text>
           <View

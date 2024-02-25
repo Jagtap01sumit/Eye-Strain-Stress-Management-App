@@ -12,7 +12,7 @@ export default function ProfileContent() {
         const userEmail = await AsyncStorage.getItem("userEmail");
         setEmail(userEmail);
         const response = await fetch(
-          `http://192.168.0.103:8000/getData?email=${userEmail}`
+          `http://192.168.29.34:8000/getData?email=${userEmail}`
         );
 
         console.log("Response Status:", response.status);

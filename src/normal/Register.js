@@ -25,7 +25,7 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://192.168.0.103:8000/register", {
+      const response = await fetch("http://192.168.29.34:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

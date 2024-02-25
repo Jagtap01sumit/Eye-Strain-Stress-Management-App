@@ -56,7 +56,7 @@ export default function ProfilePage() {
       //NOTE: email which stored in local storage at a time of login which will be send to the db of Profile.
 
       data.email = userEmail;
-      const response = await fetch("http://192.168.0.103:8000/addData", {
+      const response = await fetch("http://192.168.29.34:8000/addData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
