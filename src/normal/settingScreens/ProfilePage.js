@@ -10,9 +10,10 @@ import {
   ScrollView,
 } from "react-native";
 import Modal from "react-native-modal";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-
+import { format } from "date-fns";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 import { RadioButton } from "react-native-paper";
@@ -24,15 +25,37 @@ import ProfileContent from "./ProfileContent";
 export default function ProfilePage() {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
+  const [birthdate, setBirthdate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      const formattedDate = format(selectedDate, "yyyy-MM-dd");
+      setBirthdate(selectedDate);
+      methods.setValue("birthdate", formattedDate);
+    }
+  };
+
   const closeOptions = () => {
     setVisible(false);
   };
 
   const methods = useForm();
-  const { control, handleSubmit, formState, setError } = methods;
+  const {
+    control,
+    handleSubmit,
+    formState,
+    setError,
+    formState: { errors },
+  } = methods;
   const [refreshKey, setRefreshKey] = useState(0);
   const onSubmit = async (data) => {
     try {
+      const userEmail = await AsyncStorage.getItem("userEmail");
+      //NOTE: email which stored in local storage at a time of login which will be send to the db of Profile.
+
+      data.email = userEmail;
       const response = await fetch("http://192.168.0.103:8000/addData", {
         method: "POST",
         headers: {
@@ -94,7 +117,7 @@ export default function ProfilePage() {
             style={{
               position: "absolute",
               bottom: 0,
-              height: 550,
+              height: 540,
               backgroundColor: "white",
               width: "100%",
               borderTopLeftRadius: 10,
@@ -105,7 +128,7 @@ export default function ProfilePage() {
           >
             <FormProvider {...methods}>
               <View style={{ marginTop: 8 }}>
-                <View style={{ flexDirection: "column", marginTop: 10 }}>
+                <View style={{ flexDirection: "column" }}>
                   <View style={{ marginVertical: 4 }}>
                     <Text>User name</Text>
                   </View>
@@ -130,53 +153,69 @@ export default function ProfilePage() {
                       />
                     )}
                     name="username"
-                  />
-                </View>
-                {formState.errors.username && (
-                  <Text style={{ color: "red", marginLeft: 37 }}>
-                    {formState.errors.username.message}
-                  </Text>
-                )}
-                <View style={{ flexDirection: "column", marginTop: 5 }}>
-                  <View style={{ marginVertical: 4 }}>
-                    <Text>Birthdate</Text>
-                  </View>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        style={{
-                          width: 390,
-                          height: 40,
-                          borderWidth: 0.4,
-                          padding: 10,
-                          borderColor: "black",
-                          display: "flex",
-                          alignContent: "center",
-                          borderRadius: 6,
-                        }}
-                        onBlur={onBlur}
-                        onChangeText={(value) => onChange(value)}
-                        value={value}
-                        placeholder="Email"
-                      />
-                    )}
-                    name="email"
                     rules={{
-                      // required: "Email is required",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                        message: "Invalid email address",
-                      },
+                      required: "Username is required",
                     }}
                   />
                 </View>
-                {formState.errors.email && (
-                  <Text style={{ color: "red", marginLeft: 37 }}>
-                    {formState.errors.email.message}
+                {formState.errors.username && (
+                  <Text style={{ color: "red" }}>
+                    {formState.errors.username.message}
                   </Text>
                 )}
-                <View style={{ flexDirection: "column", marginTop: 5 }}>
+                <View style={{ flexDirection: "column", marginTop: 1 }}>
+                  <View style={{ marginVertical: 4 }}>
+                    <Text>Birthdate</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                    <View>
+                      <Controller
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <TextInput
+                            style={{
+                              width: 390,
+                              height: 40,
+                              borderWidth: 0.4,
+                              padding: 10,
+                              borderColor: "black",
+                              display: "flex",
+                              alignContent: "center",
+                              borderRadius: 6,
+                            }}
+                            value={
+                              value ? format(new Date(value), "yyyy-MM-dd") : ""
+                            }
+                            placeholder="Select Birthdate"
+                            editable={false}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                          />
+                        )}
+                        name="birthdate"
+                        rules={{
+                          required: "please select birthdate",
+                        }}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  {showDatePicker && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={birthdate}
+                      mode="date"
+                      is24Hour={true}
+                      display="default"
+                      onChange={handleDateChange}
+                    />
+                  )}
+                </View>
+                {formState.errors.birthdate && (
+                  <Text style={{ color: "red" }}>
+                    {formState.errors.birthdate.message}
+                  </Text>
+                )}
+                <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
                     <Text>Phone number</Text>
                   </View>
@@ -198,13 +237,25 @@ export default function ProfilePage() {
                         onChangeText={(value) => onChange(value)}
                         value={value}
                         keyboardType="numeric"
-                        placeholder="9137******"
+                        placeholder="Enter your phone number"
                       />
                     )}
                     name="phone"
+                    rules={{
+                      required: "phone num is required",
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Phone number must be 10 digits",
+                      },
+                    }}
                   />
                 </View>
-                <View style={{ flexDirection: "column", marginTop: 5 }}>
+                {formState.errors.phone && (
+                  <Text style={{ color: "red" }}>
+                    {formState.errors.phone.message}
+                  </Text>
+                )}
+                <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
                     <Text>Age</Text>
                   </View>
@@ -226,14 +277,21 @@ export default function ProfilePage() {
                         onChangeText={(value) => onChange(value)}
                         value={value}
                         keyboardType="numeric"
-                        placeholder="21*"
+                        placeholder="age"
                       />
                     )}
                     name="age"
+                    rules={{
+                      required: "age is required",
+                    }}
                   />
                 </View>
-
-                <View style={{ flexDirection: "column", marginTop: 5 }}>
+                {formState.errors.age && (
+                  <Text style={{ color: "red" }}>
+                    {formState.errors.age.message}
+                  </Text>
+                )}
+                <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
                     <Text>Gender</Text>
                   </View>
@@ -266,7 +324,12 @@ export default function ProfilePage() {
                     rules={{ required: "Gender is required" }}
                   />
                 </View>
-                <View style={{ flexDirection: "column", marginTop: 5 }}>
+                {formState.errors.gender && (
+                  <Text style={{ color: "red" }}>
+                    {formState.errors.gender.message}
+                  </Text>
+                )}
+                <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
                     <Text>Address</Text>
                   </View>
@@ -294,7 +357,10 @@ export default function ProfilePage() {
                   />
                 </View>
 
-                <View style={{ alignItems: "center", marginTop: 20 }}>
+                <View style={{ alignItems: "center", marginTop: 10 }}>
+                  <Text style={{ color: "red", marginLeft: 37 }}>
+                    {formState.errors.message?.message}
+                  </Text>
                   <TouchableOpacity
                     style={{
                       borderWidth: 0.3,
