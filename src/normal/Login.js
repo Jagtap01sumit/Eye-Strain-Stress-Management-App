@@ -9,7 +9,7 @@ import {
   EvilIcons,
   Entypo,
 } from "@expo/vector-icons";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Login() {
   const methods = useForm();
   const navigation = useNavigation();
@@ -24,20 +24,24 @@ export default function Login() {
         },
         body: JSON.stringify(data),
       });
-      console.log(data);
-
-      const responseData = await response.json();
 
       if (response.ok) {
+        const userEmail = data.email;
+
+        await AsyncStorage.setItem("userEmail", userEmail);
+
+        const storedUserEmail = await AsyncStorage.getItem("userEmail");
+        console.log(storedUserEmail, "store");
         methods.reset();
-        console.log("login successful");
-        navigation.navigate("WelcomeScreen");
+
+        // Navigate to "CustomDrawer" screen with userEmail as a parameter
+        navigation.navigate("CustomDrawer", { userEmail: storedUserEmail });
       } else {
+        const responseData = await response.json();
         setError("message", {
           type: "manual",
           message: responseData.error,
         });
-        // console.log(error);
       }
     } catch (err) {
       console.log(err);
@@ -177,10 +181,10 @@ export default function Login() {
                     justifyContent: "center",
                     borderRadius: 6,
                   }}
-                  // onPress={handleSubmit(onSubmit)}
-                  onPress={() => {
-                    navigation.navigate("CustomDrawer");
-                  }}
+                  onPress={handleSubmit(onSubmit)}
+                  // onPress={() => {
+                  //   navigation.navigate("CustomDrawer");
+                  // }}
                 >
                   <Text
                     style={{ fontSize: 18, fontWeight: "bold", color: "white" }}

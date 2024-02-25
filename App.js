@@ -9,6 +9,7 @@ import Register from "./src/normal/Register";
 import WelcomeScreen from "./src/normal/WelcomScreen";
 import ProfilePage from "./src/normal/settingScreens/ProfilePage";
 import AppInfo from "./src/normal/settingScreens/AppInfo";
+import Setting from "./src/drawer/Screens/Setting";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -38,6 +39,11 @@ export default function App() {
         <Stack.Screen
           name="AppInfo"
           component={AppInfo}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Setting"
+          component={Setting}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -33,6 +33,7 @@ export default function CustomDrawer() {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   const moveToRight = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
+  // const userEmail = route.params?.userEmail;
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
