@@ -2,9 +2,11 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { colors } from "../../../theme";
 
 export default function Setting() {
   const navigation = useNavigation();
+
   const settingMenu = [
     { icon: "user", title: "Profile", route: "ProfilePage" },
     {
@@ -15,7 +17,7 @@ export default function Setting() {
     { icon: "lock", title: "Password", route: "AppInfo" },
 
     { icon: "lock", title: "Privacy Policy", route: "AppInfo" },
-    { icon: "logout", title: "Logout", route: "Login" }
+    { icon: "logout", title: "Logout", route: "Login" },
   ];
   return (
     <View style={{ marginTop: 40 }}>
