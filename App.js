@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+// import { ThemeContext } from "./context/ThemeContext";
 
 import CustomDrawer from "./src/drawer/CustomDrawer";
 import Login from "./src/normal/Login";
@@ -10,12 +11,16 @@ import WelcomeScreen from "./src/normal/WelcomScreen";
 import ProfilePage from "./src/normal/settingScreens/ProfilePage";
 import AppInfo from "./src/normal/settingScreens/AppInfo";
 import Setting from "./src/drawer/Screens/Setting";
-
+import BlinkRate from "./src/drawer/Screens/BinkRate";
+import { ThemeContext } from "./context/ThemeContext";
 export default function App() {
   const Stack = createStackNavigator();
+  const [theme, setTheme] = useState({ mode: "dark" });
   return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
     <NavigationContainer>
       <Stack.Navigator>
+        
         <Stack.Screen
           name="WelcomeScreen"
           component={WelcomeScreen}
@@ -26,11 +31,7 @@ export default function App() {
           component={Login}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="CustomDrawer"
-          component={CustomDrawer}
-          options={{ headerShown: false }}
-        />
+
         <Stack.Screen
           name="Register"
           component={Register}
@@ -51,8 +52,18 @@ export default function App() {
           component={ProfilePage}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+        name="CustomDrawer"
+        component={CustomDrawer}
+        options={{ headerShown: false }}
+      />
+         <Stack.Screen
+        name="BlinkRate"
+        component={BlinkRate}
+        options={{ headerShown: false }}
+      />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer></ThemeContext.Provider>
   );
 }
 

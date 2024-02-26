@@ -181,10 +181,10 @@ export default function Login() {
                     justifyContent: "center",
                     borderRadius: 6,
                   }}
-                  onPress={handleSubmit(onSubmit)}
-                  // onPress={() => {
-                  //   navigation.navigate("CustomDrawer");
-                  // }}
+                  // onPress={handleSubmit(onSubmit)}
+                  onPress={() => {
+                    navigation.navigate("CustomDrawer");
+                  }}
                 >
                   <Text
                     style={{ fontSize: 18, fontWeight: "bold", color: "white" }}

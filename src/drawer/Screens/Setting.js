@@ -15,7 +15,7 @@ export default function Setting() {
     { icon: "lock", title: "Password", route: "AppInfo" },
 
     { icon: "lock", title: "Privacy Policy", route: "AppInfo" },
-    { icon: "logout", title: "Logout", route: "Login" },
+    { icon: "logout", title: "Logout", route: "Login" }
   ];
   return (
     <View style={{ marginTop: 40 }}>

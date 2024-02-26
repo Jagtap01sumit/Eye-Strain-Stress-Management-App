@@ -5,8 +5,11 @@ import {
   Image,
   Animated,
   ImageBackground,
+  Switch,
+  color,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import FeatherIcon from "react-native-vector-icons/Feather";
 import {
   TouchableOpacity,
   GestureHandlerRootView,
@@ -21,11 +24,12 @@ import DigitalWellbeing from "./Screens/DigitalWellbeing";
 import Distance from "./Screens/Distance";
 import Setting from "./Screens/Setting";
 import BlinkCount from "./Screens/BlinkCount";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function CustomDrawer() {
   const menu = [
     { icon: "home", title: "Home" },
-    // { icon: "home", title: "Blink Rate" },
+    { icon: "home", title: "Blink Rate" },
     { icon: "home", title: "Blink Count" },
     { icon: "home", title: "Distance" },
     { icon: "home", title: "DigitalWellbeing" },
@@ -35,7 +39,14 @@ export default function CustomDrawer() {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   const moveToRight = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
-  // const userEmail = route.params?.userEmail;
+
+  
+  
+  const {theme,setTheme}=useContext(ThemeContext)
+  console.log(theme.mode)
+  const backgroundColor=theme.mode === "dark" ? "#111827" :"#666f80"
+  const textColor=theme.mode==="dark" ? "white" : "white"
+  const theme_icon=theme.mode=="dark"?'moon':'sun'
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -53,10 +64,15 @@ export default function CustomDrawer() {
       }),
     ]).start();
   };
+
+  const toggleTheme = () => {
+    const newMode = theme.mode === "light" ? "dark" : "light";
+    setTheme({ mode: newMode });
+  };
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* menu design  */}
-      <View style={{ flex: 1, backgroundColor: "#666f80" }}>
+      <View style={{ flex: 1, backgroundColor: `${backgroundColor}` }}>
         <View
           style={{ width: "100", flexDirection: "row", alignItems: "center" }}
         >
@@ -73,7 +89,7 @@ export default function CustomDrawer() {
           />
           <View>
             <View style={{ marginLeft: 10, marginTop: 20 }}>
-              <Text style={{ fontSize: 22, fontWeight: "800", color: "#fff" }}>
+              <Text style={{ fontSize: 22, fontWeight: "800", color: `${textColor}` }}>
                 Eye Strain
               </Text>
               <Text
@@ -81,7 +97,7 @@ export default function CustomDrawer() {
                   fontSize: 12,
                   marginLeft: 0.8,
                   marginTop: 3,
-                  color: "#fff",
+                  color: `${textColor}`
                 }}
               >
                 By BVCOE-IT
@@ -125,6 +141,50 @@ export default function CustomDrawer() {
               </TouchableOpacity>
             )}
           />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              height: 50,
+              backgroundColor: "#f2f2f2",
+              borderRadius: 8,
+              width: 200,
+              margin: 19,
+
+              paddingLeft: 12,
+              paddingRight: 12,
+            }}
+          >
+            <View
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 9999,
+                marginRight: 12,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "black",
+              }}
+            >
+              <FeatherIcon  color="#000" name={theme_icon} size={20} />
+            </View>
+            <Text
+              style={{
+                rowLabel: {
+                  fontSize: 17,
+                  fontWeight: "400",
+                  color: "white",
+                },
+              }}
+            >
+              Dark Mode
+            </Text>
+
+            <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0 }} />
+            <Switch onValueChange={toggleTheme} value={theme.mode === "dark"} />
+          </View>
         </View>
       </View>
       {/* home design  */}
@@ -169,11 +229,11 @@ export default function CustomDrawer() {
         >
           <View style={{ backgroundColor: "transparent" }}>
             {selectedMenuItem === 0 && <Home />}
-            {/* {selectedMenuItem === 1 && <BlinkRate />} */}
-            {selectedMenuItem === 1 && <BlinkCount />}
-            {selectedMenuItem === 2 && <Distance />}
-            {selectedMenuItem === 3 && <DigitalWellbeing />}
-            {selectedMenuItem === 4 && <Setting />}
+            {selectedMenuItem === 1 && <BlinkRate />}
+            {selectedMenuItem === 2 && <BlinkCount />}
+            {selectedMenuItem === 3 && <Distance />}
+            {selectedMenuItem === 4 && <DigitalWellbeing />}
+            {selectedMenuItem === 5 && <Setting />}
           </View>
         </ImageBackground>
         {/* <BottomNavigation /> */}
