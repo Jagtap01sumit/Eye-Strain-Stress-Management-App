@@ -16,54 +16,57 @@ import { ThemeContext } from "./context/ThemeContext";
 export default function App() {
   const Stack = createStackNavigator();
   const [theme, setTheme] = useState({ mode: "dark" });
+  const [isBlinkReminderOn, setBlinkReminder] = useState(false);
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-    <NavigationContainer>
-      <Stack.Navigator>
-        
-        <Stack.Screen
-          name="WelcomeScreen"
-          component={WelcomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
+    <ThemeContext.Provider
+      value={{ theme, setTheme, isBlinkReminderOn, setBlinkReminder }}
+    >
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="WelcomeScreen"
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="AppInfo"
-          component={AppInfo}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Setting"
-          component={Setting}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ProfilePage"
-          component={ProfilePage}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-        name="CustomDrawer"
-        component={CustomDrawer}
-        options={{ headerShown: false }}
-      />
-         <Stack.Screen
-        name="BlinkRate"
-        component={BlinkRate}
-        options={{ headerShown: false }}
-      />
-      </Stack.Navigator>
-    </NavigationContainer></ThemeContext.Provider>
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AppInfo"
+            component={AppInfo}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Setting"
+            component={Setting}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ProfilePage"
+            component={ProfilePage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CustomDrawer"
+            component={CustomDrawer}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BlinkRate"
+            component={BlinkRate}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeContext.Provider>
   );
 }
 
