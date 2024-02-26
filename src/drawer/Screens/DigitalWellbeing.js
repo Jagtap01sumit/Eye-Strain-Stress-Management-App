@@ -1,8 +1,13 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, FlatList, LogBox } from "react-native";
+import React, { useContext } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../theme";
 
 export default function DigitalWellbeing() {
+  const { theme } = useContext(ThemeContext);
+  let activeColors = colors[theme.mode];
+  console.log(activeColors.tint);
   const lineValue = [
     {
       platform: "whatsapp",
@@ -18,23 +23,23 @@ export default function DigitalWellbeing() {
       color: "#E4405F",
       value: 20,
       content:
-        "Instagram boasts 1 billion active users globally. Its one of the top social media platforms for sharing photos and videos. Over 95 million photos and videos are shared on Instagram every day",
+        "Instagram boasts 1 billion active users globally. Its one of the top social media platforms for sharing photos and videos. Over 95 million photos and videos are shared on Instagram every day.",
     },
     {
       platform: "facebook",
-      icon: "facebook",
+      icon: "facebook-square",
       color: "#1877F2",
       value: 30,
       content:
-        "With a massive user base of 2.8 billion monthly active users. Users engage in various activities, including sharing updates, photos, and connecting with friends. On average, over 4.5 billion likes are given each day on Facebook",
+        "With a massive user base of 2.8 billion monthly active users. Users engage in various activities, including sharing updates, photos, and connecting with friends.",
     },
     {
       platform: "youtube",
-      icon: "youtube",
+      icon: "youtube-square",
       color: "#FF0000",
       value: 40,
       content:
-        "YouTube is the go-to platform for video content, with 2 billion  users. Over 500 hours of video are uploaded to YouTube every minute. It's a hub for diverse content, from tutorials to entertainment, with more than 1 billion hours of YouTube videos watched daily.",
+        "YouTube is the go-to platform for video content, with 2 billion  users. Over 500 hours of video are uploaded to YouTube every minute. It's a hub for diverse content, from tutorials to entertainment.",
     },
     {
       platform: "game-controller",
@@ -42,7 +47,7 @@ export default function DigitalWellbeing() {
       color: "#3498DB",
       value: 50,
       content:
-        "Gaming is a global phenomenon, and game controllers play a crucial role. There are over 2.7 billion gamers worldwide. The gaming industry generates billions in revenue annually, with gamers spending countless hours immersed in virtual worlds. Esports, competitive gaming, has a growing fanbase with millions tuning in for tournaments.",
+        "Gaming is a global phenomenon, and game controllers play a crucial role. There are over 2.7 billion gamers worldwide. The gaming industry generates billions in revenue annually.",
     },
     {
       platform: "snapchat-square",
@@ -50,25 +55,33 @@ export default function DigitalWellbeing() {
       color: "#ffbc00",
       value: 100,
       content:
-        "Snapchat, known for its disappearing messages, has over 500 million monthly active users. It's a popular platform among younger audiences for its creative features like filters and stories. More than 5 billion snaps are created every day, making Snapchat a dynamic and engaging social platform.",
+        "Snapchat, known for its disappearing messages, has over 500 million monthly active users. It's a popular platform among younger audiences for its creative features like filters and stories.",
     },
   ];
 
+  //card
   const renderItem = ({ item }) => (
     <View style={{ marginTop: 10 }}>
-      <View style={styles.itemContainer}>
-        <FontAwesome name={item.icon} size={80} color={item.color} />
+      <View
+        style={[
+          styles.itemContainer,
+          { backgroundColor: activeColors.secondary },
+        ]}
+      >
+        <FontAwesome name={item.icon} size={50} color={item.color} />
         <View style={styles.itemContent}>
-          <Text style={styles.platformText}>{item.platform}</Text>
+          <Text style={[styles.platformText, { color: activeColors.tint }]}>
+            {item.platform}
+          </Text>
           <View
             style={{
               width: `${item.value}%`,
               height: 3,
-              backgroundColor: "black",
+              backgroundColor: activeColors.tint,
             }}
           ></View>
           <View style={{ marginVertical: 10 }}>
-            <Text>{item.content}</Text>
+            <Text style={{ color: activeColors.tint }}>{item.content}</Text>
           </View>
         </View>
       </View>
@@ -101,12 +114,12 @@ const styles = StyleSheet.create({
   itemContent: {
     display: "flex",
     // alignItems: "center",
-    margin: 5,
-    padding: 5,
+    margin: 3,
+    padding: 3,
     justifyContent: "center",
   },
   platformText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "800",
     marginVertical: 10,
     // margin: 10,

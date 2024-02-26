@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+// import { ThemeContext } from "./context/ThemeContext";
 
 import CustomDrawer from "./src/drawer/CustomDrawer";
 import Login from "./src/normal/Login";
@@ -9,12 +10,9 @@ import Register from "./src/normal/Register";
 import WelcomeScreen from "./src/normal/WelcomScreen";
 import ProfilePage from "./src/normal/settingScreens/ProfilePage";
 import AppInfo from "./src/normal/settingScreens/AppInfo";
-import EditProfileScreen from "./src/normal/settingScreens/EditProfileScreen";
-import Blinkcount from "./src/drawer/Screens/Blinkcount";
 
 export default function App() {
   const Stack = createStackNavigator();
-  console.log(ProfilePage)
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -46,16 +44,6 @@ export default function App() {
         <Stack.Screen
           name="ProfilePage"
           component={ProfilePage}
-          options={{ headerShown: false }}
-        />
-          <Stack.Screen
-          name="EditProfileScreen"
-          component={EditProfileScreen}
-          options={{ headerShown: false }}
-        />
-         <Stack.Screen
-          name="BlinkCount"
-          component={Blinkcount}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

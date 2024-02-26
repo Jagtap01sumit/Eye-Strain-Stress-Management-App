@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -8,26 +8,39 @@ import {
   TouchableOpacity,
   Switch,
   Image,
+  Pressable,
 } from "react-native";
+
 import FeatherIcon from "react-native-vector-icons/Feather";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../theme";
 
 export default function AppInfo() {
+  const { theme, setTheme } = useContext(ThemeContext);
   const [color, setColor] = useState(false);
   const [form, setForm] = useState({
     darkMode: false,
     emailNotifications: true,
     pushNotifications: false,
   });
+  let activeColors = colors[theme.mode];
+  console.log(activeColors);
 
+  const backgroundColor = theme.mode === "dark" ? "#111827" : "#666f80";
+  const textColor = theme.mode === "dark" ? "white" : "white";
+  const theme_icon = theme.mode == "dark" ? "moon" : "sun";
+
+  const toggleTheme = () => {
+    const newMode = theme.mode === "light" ? "dark" : "light";
+    setTheme({ mode: newMode });
+  };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0000" }}>
-      <View
-        style={{ backgroundColor: color ? "black" : "white", height: "100%" }}
-      >
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ backgroundColor: activeColors.primary, height: "100%" }}>
         <View
           style={{
             padding: 24,
-            backgroundColor: color ? "black" : "white",
+            backgroundColor: activeColors.primary,
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
@@ -61,14 +74,21 @@ export default function AppInfo() {
                 marginTop: 20,
                 fontSize: 19,
                 fontWeight: "600",
-                color: color ? "white" : "black",
+                color: activeColors.tertiary,
                 textAlign: "center",
               }}
             >
               John Doe
             </Text>
 
-            <Text style={styles.profileAddress}>
+            <Text
+              style={{
+                marginTop: 5,
+                fontSize: 16,
+                color: activeColors.tertiary,
+                textAlign: "center",
+              }}
+            >
               123 Maple Street. Anytown, PA 17101
             </Text>
           </View>
@@ -76,57 +96,131 @@ export default function AppInfo() {
 
         <ScrollView>
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Preferences</Text>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 12,
+                fontWeight: "600",
+                color: activeColors.tertiary,
+                textTransform: "uppercase",
+                letterSpacing: 1.1,
+              }}
+            >
+              Preferences
+            </Text>
 
             <TouchableOpacity
               onPress={() => {
                 // handle onPress
               }}
-              style={styles.row}
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
             >
-              <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
-                <FeatherIcon color="#fff" name="globe" size={20} />
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="globe"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Language</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Language
+              </Text>
 
               <View style={styles.rowSpacer} />
 
               <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
             </TouchableOpacity>
 
-            <View style={styles.row}>
-              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
-                <FeatherIcon color="#fff" name="moon" size={20} />
+            <View
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
+            >
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name={theme_icon}
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Dark Mode</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Dark Mode
+              </Text>
 
               <View style={styles.rowSpacer} />
 
-              <Switch onValueChange={() => setColor(!color)} value={color} />
+              <Switch
+                onValueChange={toggleTheme}
+                value={theme.mode === "dark"}
+              />
             </View>
 
-            <TouchableOpacity onPress={() => {}} style={styles.row}>
-              <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
-                <FeatherIcon color="#fff" name="navigation" size={20} />
+            <TouchableOpacity
+              onPress={() => {}}
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
+            >
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="navigation"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Location</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Location
+              </Text>
 
               <View style={styles.rowSpacer} />
 
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              <FeatherIcon
+                color={activeColors.tertiary}
+                name="chevron-right"
+                size={20}
+              />
             </TouchableOpacity>
 
-            <View style={styles.row}>
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                <FeatherIcon color="#fff" name="at-sign" size={20} />
+            <View
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
+            >
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="at-sign"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Email Notifications</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Email Notifications
+              </Text>
 
-              <View style={styles.rowSpacer} />
+              <View
+                style={[
+                  styles.rowSpacer,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              />
 
               <Switch
                 onValueChange={(emailNotifications) =>
@@ -136,12 +230,25 @@ export default function AppInfo() {
               />
             </View>
 
-            <View style={styles.row}>
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                <FeatherIcon color="#fff" name="bell" size={20} />
+            <View
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
+            >
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="bell"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Push Notifications</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Push Notifications
+              </Text>
 
               <View style={styles.rowSpacer} />
 
@@ -155,47 +262,101 @@ export default function AppInfo() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Resources</Text>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 12,
+                fontWeight: "600",
+                color: activeColors.tertiary,
+                textTransform: "uppercase",
+                letterSpacing: 1.1,
+              }}
+            >
+              Resources
+            </Text>
 
             <TouchableOpacity
               onPress={() => {
                 // handle onPress
               }}
-              style={styles.row}
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
             >
-              <View style={[styles.rowIcon, { backgroundColor: "#8e8d91" }]}>
-                <FeatherIcon color="#fff" name="flag" size={20} />
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="flag"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Report Bug</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Report Bug
+              </Text>
 
               <View style={styles.rowSpacer} />
 
               <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {}} style={styles.row}>
-              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
-                <FeatherIcon color="#fff" name="mail" size={20} />
+            <TouchableOpacity
+              onPress={() => {}}
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
+            >
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="mail"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Contact Us</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Contact Us
+              </Text>
 
               <View style={styles.rowSpacer} />
 
               <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {}} style={styles.row}>
-              <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
-                <FeatherIcon color="#fff" name="star" size={20} />
+            <TouchableOpacity
+              onPress={() => {}}
+              style={[styles.row, { backgroundColor: activeColors.secondary }]}
+            >
+              <View
+                style={[
+                  styles.rowIcon,
+                  { backgroundColor: activeColors.secondary },
+                ]}
+              >
+                <FeatherIcon
+                  color={activeColors.tertiary}
+                  name="star"
+                  size={20}
+                />
               </View>
 
-              <Text style={styles.rowLabel}>Rate in App Store</Text>
+              <Text style={[styles.rowLabel, { color: activeColors.tertiary }]}>
+                Rate in App Store
+              </Text>
 
               <View style={styles.rowSpacer} />
 
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              <FeatherIcon
+                color={activeColors.tertiary}
+                name="chevron-right"
+                size={20}
+              />
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -216,6 +377,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   profileAvatar: {
+    marginTop: 34,
     width: 72,
     height: 72,
     borderRadius: 9999,
@@ -232,24 +394,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
   },
 
-  profileAddress: {
-    marginTop: 5,
-    fontSize: 16,
-    color: "#989898",
-    textAlign: "center",
-  },
   /** Section */
   section: {
     paddingHorizontal: 24,
   },
-  sectionTitle: {
-    paddingVertical: 12,
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#9e9e9e",
-    textTransform: "uppercase",
-    letterSpacing: 1.1,
-  },
+
   /** Row */
   row: {
     flexDirection: "row",

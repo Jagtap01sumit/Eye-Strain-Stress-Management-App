@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../theme";
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
+  const { theme } = useContext(ThemeContext);
+
+  let activeColors = colors[theme.mode];
 
   const categories = [
     {
@@ -47,7 +52,6 @@ export default function Home() {
   const closeOptions = () => {
     setVisible(false);
   };
-
   return (
     <ScrollView>
       <View>

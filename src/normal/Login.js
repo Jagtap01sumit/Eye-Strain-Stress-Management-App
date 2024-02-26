@@ -9,7 +9,7 @@ import {
   EvilIcons,
   Entypo,
 } from "@expo/vector-icons";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Login() {
   const methods = useForm();
   const navigation = useNavigation();
@@ -17,28 +17,30 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://192.168.0.103:8000/login", {
+      const response = await fetch("http://192.168.29.34:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-      console.log(data);
-
-      const responseData = await response.json();
 
       if (response.ok) {
+        const userEmail = data.email;
+
+        await AsyncStorage.setItem("userEmail", userEmail);
+
+        const storedUserEmail = await AsyncStorage.getItem("userEmail");
+        console.log(storedUserEmail, "store");
         methods.reset();
         console.log("login successful");
-        
         navigation.navigate("WelcomeScreen");
       } else {
+        const responseData = await response.json();
         setError("message", {
           type: "manual",
           message: responseData.error,
         });
-        // console.log(error);
       }
     } catch (err) {
       console.log(err);
