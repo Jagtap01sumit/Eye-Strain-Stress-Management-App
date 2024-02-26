@@ -46,7 +46,7 @@ export default function Setting() {
               marginTop: 10,
 
               borderRadius: 10,
-              backgroundColor: activeColors.primary,
+              backgroundColor: activeColors.secondary,
               margin: 10,
               marginBottom: 12,
               borderRadius: 20,

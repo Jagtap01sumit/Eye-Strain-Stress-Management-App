@@ -158,7 +158,8 @@ export default function ProfilePage() {
                         onBlur={onBlur}
                         onChangeText={(value) => onChange(value)}
                         value={value}
-                        placeholder="john01John"
+                        placeholder="Enter Your Name"
+                        placeholderTextColor={activeColors.tertiary}
                       />
                     )}
                     name="username"
@@ -197,6 +198,7 @@ export default function ProfilePage() {
                               value ? format(new Date(value), "yyyy-MM-dd") : ""
                             }
                             placeholder="Select Birthdate"
+                            placeholderTextColor={activeColors.tertiary}
                             editable={false}
                             onBlur={onBlur}
                             onChangeText={onChange}
@@ -251,6 +253,7 @@ export default function ProfilePage() {
                         value={value}
                         keyboardType="numeric"
                         placeholder="Enter your phone number"
+                        placeholderTextColor={activeColors.tertiary}
                       />
                     )}
                     name="phone"
@@ -292,6 +295,7 @@ export default function ProfilePage() {
                         value={value}
                         keyboardType="numeric"
                         placeholder="age"
+                        placeholderTextColor={activeColors.tertiary}
                       />
                     )}
                     name="age"
@@ -316,12 +320,16 @@ export default function ProfilePage() {
                         <RadioButton.Item
                           label="Male"
                           value="male"
+                          color="white"
+                          labelStyle={{ color: activeColors.tertiary }}
                           status={value === "male" ? "checked" : "unchecked"}
                           onPress={() => onChange("male")}
                         />
                         <RadioButton.Item
                           label="Female"
                           value="female"
+                          labelStyle={{ color: activeColors.tertiary }}
+                          color="white"
                           status={value === "female" ? "checked" : "unchecked"}
                           onPress={() => onChange("female")}
                         />
@@ -329,12 +337,15 @@ export default function ProfilePage() {
                         <RadioButton.Item
                           label="Other"
                           value="Other"
+                          color="white"
+                          labelStyle={{ color: activeColors.tertiary }}
                           status={value === "Other" ? "checked" : "unchecked"}
                           onPress={() => onChange("Other")}
                         />
                       </View>
                     )}
                     name="gender"
+                    placeholderTextColor={activeColors.tertiary}
                     rules={{ required: "Gender is required" }}
                   />
                 </View>
@@ -365,6 +376,7 @@ export default function ProfilePage() {
                         onChangeText={(value) => onChange(value)}
                         value={value}
                         placeholder="address"
+                        placeholderTextColor={activeColors.tertiary}
                       />
                     )}
                     name="address"
