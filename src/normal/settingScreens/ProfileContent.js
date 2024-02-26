@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { colors } from "../../../theme";
+
 export default function ProfileContent() {
   const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");
@@ -69,7 +70,7 @@ export default function ProfileContent() {
       </View>
       <View style={{ marginTop: 50, margin: 10 }}>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>User Name</Text>
+          <Text style={{ fontSize: 24}}>User Name</Text>
           <Text>{userData?.username}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>

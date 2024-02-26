@@ -125,13 +125,17 @@
 
 // const styles = StyleSheet.create({});
 // Distance.js
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { Camera } from 'expo-camera';
-import * as FaceDetector from 'expo-face-detector';
-import FaceDataView from './FaceDataView';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { Camera } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
+import FaceDataView from "./FaceDataView";
+import { useNavigation } from "@react-navigation/native";
+import { colors } from "../../../theme";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 export default function Distance() {
+  const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
@@ -139,10 +143,21 @@ export default function Distance() {
   const [faceData, setFaceData] = useState([]);
   const [faceDataListener, setFaceDataListener] = useState(null);
 
+  const { theme, setTheme } = useContext(ThemeContext);
+  const [color, setColor] = useState(false);
+  const [form, setForm] = useState({
+    darkMode: false,
+  });
+  
+  let activeColors = colors[theme.mode];
+  console.log(activeColors);
+
+  const backgroundColor = theme.mode === "dark" ? "#111827" : "#666f80";
+
   useEffect(() => {
     const setupCamera = async () => {
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === 'granted');
+      setHasCameraPermission(cameraStatus.status === "granted");
     };
 
     setupCamera();
@@ -178,31 +193,30 @@ export default function Distance() {
       const initialFaceWidth = bounds.size.width;
       const initialFaceHeight = bounds.size.height;
       // console.log('Initial Height:', initialFaceHeight);
-      
+
       if (initialFaceWidth > 450 || initialFaceHeight > 450) {
-        alert('Move back! You are too close to the camera.');
+        alert("Move back! You are too close to the camera.");
       }
-  
+
       const handleFaceChange = (updatedFace) => {
         if (updatedFace && updatedFace.bounds) {
           const updatedBounds = updatedFace.bounds;
           const updatedFaceWidth = updatedBounds.size.width;
           const updatedFaceHeight = updatedBounds.size.height;
-  
+
           const widthChangeRatio = updatedFaceWidth / initialFaceWidth;
           const heightChangeRatio = updatedFaceHeight / initialFaceHeight;
           // Adjust the threshold values as needed
           if (widthChangeRatio > 1.2 || heightChangeRatio > 1.2) {
-            alert('Move back! You are too close to the camera.');
+            alert("Move back! You are too close to the camera.");
           }
         }
       };
-  
+
       // Listen for face updates to calculate changes
       setFaceDataListener(handleFaceChange);
     }
   };
-  
 
   const handleFacesDetected = ({ faces }) => {
     if (faces && faces.length > 0) {
@@ -222,7 +236,7 @@ export default function Distance() {
           ref={(ref) => setCamera(ref)}
           style={styles.fixedRatio}
           type={type}
-          ratio={'1:1'}
+          ratio={"1:1"}
           onFacesDetected={handleFacesDetected}
           faceDetectorSettings={{
             mode: FaceDetector.FaceDetectorMode.fast,
@@ -244,7 +258,7 @@ export default function Distance() {
 const styles = StyleSheet.create({
   cameraContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   fixedRatio: {
     flex: 1,

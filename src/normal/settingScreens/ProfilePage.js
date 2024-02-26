@@ -142,7 +142,6 @@ export default function ProfilePage() {
                           borderWidth: 0.4,
                           padding: 10,
                           borderColor: "black",
-
                           alignContent: "center",
                           borderRadius: 6,
                         }}
