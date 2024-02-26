@@ -158,8 +158,7 @@ export default function ProfilePage() {
                         onBlur={onBlur}
                         onChangeText={(value) => onChange(value)}
                         value={value}
-                        placeholder="Enter Your Name"
-                        placeholderTextColor={activeColors.tertiary}
+                        placeholder="john01John"
                       />
                     )}
                     name="username"
