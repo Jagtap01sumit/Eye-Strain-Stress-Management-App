@@ -1,9 +1,13 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../theme";
 export default function ProfileContent() {
   const [userData, setUserData] = useState(null);
   const [email, setEmail] = useState("");
+  const { theme } = useContext(ThemeContext);
+  const activeColors = colors[theme.mode];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +52,7 @@ export default function ProfileContent() {
 
   return (
     <View>
-      <View style={{ display: "flex", alignItems: "center", marginTop: 30 }}>
+      <View style={{ display: "flex", alignItems: "center" }}>
         <View onPress={() => {}}>
           <View style={{ position: "relative" }}>
             <Image
@@ -97,11 +101,6 @@ export default function ProfileContent() {
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontSize: 24 }}>Address</Text>
           <Text>{userData?.address}</Text>
-          <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
-        </View>
-        <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Other Info</Text>
-          <Text>{userData?.otherInfo}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
       </View>

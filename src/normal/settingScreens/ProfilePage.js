@@ -85,7 +85,7 @@ export default function ProfilePage() {
 
   return (
     <ImageBackground
-      source={require("../../../assets/bg1.jpg")}
+      source={require("../../../assets/bg3.jpg")}
       style={{ flex: 1, resizeMode: "cover" }}
     >
       <View

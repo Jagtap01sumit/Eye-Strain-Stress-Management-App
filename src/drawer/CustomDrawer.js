@@ -198,7 +198,7 @@ export default function CustomDrawer() {
       <Animated.View
         style={{
           flex: 1,
-          backgroundColor: "white",
+          backgroundColor: theme.mode === "dark" ? "#6c87a1" : "#f3f4f6",
           position: "absolute",
           top: 0,
           left: 0,
@@ -208,7 +208,12 @@ export default function CustomDrawer() {
           borderRadius: showMenu ? 15 : 0,
         }}
       >
-        <View style={{ flexDirection: "row", marginTop: 50 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 50,
+          }}
+        >
           <TouchableOpacity style={{ marginLeft: 20 }} onPress={toggleMenu}>
             {showMenu ? (
               <Image
@@ -224,7 +229,11 @@ export default function CustomDrawer() {
           </Text>
         </View>
         <ImageBackground
-          source={require("../../assets/bg1.jpg")}
+          source={
+            theme.mode === "dark"
+              ? require("../../assets/bg2.jpg")
+              : require("../../assets/bg3.jpg")
+          }
           style={{ flex: 1, resizeMode: "cover" }}
         >
           <View style={{ backgroundColor: "transparent" }}>
