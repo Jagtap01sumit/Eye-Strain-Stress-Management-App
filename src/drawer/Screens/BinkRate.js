@@ -209,7 +209,7 @@ export default function BlinkRate() {
       </TouchableOpacity>
 
       <View style={{ paddingLeft: 10, marginTop: 30 }}>
-        <Text style={{ fontSize: 20, fontWeight: "600", color: "#888" }}>
+        <Text style={{ fontSize: 20, fontWeight: "600", color: "black" }}>
           20-20-20 rule will be used: every 20 minutes, look at something 20
           feet away for 20 seconds. This alert message will be given to the
           user.
@@ -292,3 +292,138 @@ async function registerForPushNotificationsAsync() {
 
   return token;
 }
+// import React, { useState, useEffect, useRef, useContext } from "react";
+// import { StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
+// import { FontAwesome } from "@expo/vector-icons";
+// import { ThemeContext } from "../../../context/ThemeContext";
+// import { colors } from "../../../theme";
+
+// export default function BlinkRate() {
+//   const [isBlinkReminderOn, setBlinkReminder] = useState(false);
+//   const { theme } = useContext(ThemeContext);
+//   const activeColors = colors[theme.mode];
+//   const soundObject = useRef(new Audio.Sound());
+//   let blinkTimeout;
+
+//   useEffect(() => {
+//     return () => {
+//       soundObject.current.stopAsync();
+//       soundObject.current.unloadAsync();
+//     };
+//   }, []);
+
+//   const toggleBlinkReminder = () => {
+//     setBlinkReminder(!isBlinkReminderOn);
+//   };
+
+//   const stopButtonPressed = () => {
+//     if (isBlinkReminderOn) {
+//       setBlinkReminder(false);
+//       clearTimeout(blinkTimeout);
+//     } else {
+//       console.log("Stop pressed when Blink reminder is already off");
+//     }
+//   };
+
+//   const scheduleNotification = async () => {
+//     // Schedule notification implementation
+//   };
+
+//   const showBlinkAlert = async () => {
+//     try {
+//       // Load and play the audio
+//       await soundObject.current.loadAsync(require("../../../assets/audio.wav"));
+//       await soundObject.current.playAsync();
+
+//       // Cancel the scheduled notification for the 20-20-20 rule
+//       await Notifications.cancelScheduledNotificationAsync("blinkReminder");
+
+//       // Display notification when audio starts
+//       await Notifications.scheduleNotificationAsync({
+//         identifier: "blinkReminder",
+//         content: {
+//           title: "Audio Started",
+//           body: "Time to take a break and follow the 20-20-20 rule!",
+//         },
+//         trigger: null,
+//       });
+
+//       // Countdown for 20 seconds
+//       const countdown = Array.from({ length: 20 }, (_, index) => index + 1).reverse();
+//       for (const number of countdown) {
+//         await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay for 1 second
+//         console.log(number); // Display the countdown number
+//       }
+
+//       // Stop and unload the audio after the countdown
+//       await soundObject.current.stopAsync();
+//       await soundObject.current.unloadAsync();
+//     } catch (error) {
+//       console.error("Error during showBlinkAlert", error);
+//     }
+//   };
+
+//   return (
+//     <View style={[styles.container, { backgroundColor: activeColors.primary }]}>
+//       <TouchableOpacity onPress={toggleBlinkReminder}>
+//         <View
+//           style={[
+//             styles.reminderButton,
+//             { backgroundColor: isBlinkReminderOn ? activeColors.success : activeColors.danger },
+//           ]}
+//         >
+//           <Text style={[styles.buttonText, { color: activeColors.text }]}>
+//             Blink reminder {isBlinkReminderOn ? "On" : "Off"}{" "}
+//             <FontAwesome
+//               name={isBlinkReminderOn ? "toggle-on" : "toggle-off"}
+//               size={29}
+//               color={activeColors.text}
+//             />
+//           </Text>
+//         </View>
+//       </TouchableOpacity>
+
+//       <View style={{ paddingLeft: 10, marginTop: 30 }}>
+//         <Text style={{ fontSize: 20, fontWeight: "600", color: activeColors.text }}>
+//           20-20-20 rule will be used: every 20 minutes, look at something 20
+//           feet away for 20 seconds. This alert message will be given to the
+//           user.
+//         </Text>
+//       </View>
+
+//       <TouchableOpacity onPress={stopButtonPressed}>
+//         <View style={styles.stopButton}>
+//           <Text style={[styles.buttonText, { color: activeColors.text }]}>Stop</Text>
+//         </View>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     margin: 10,
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   reminderButton: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     padding: 16,
+//     marginTop: 40,
+//     borderRadius: 20,
+//   },
+//   buttonText: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//   },
+//   stopButton: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     width: 280,
+//     height: 80,
+//     borderRadius: 40,
+//     marginVertical: 20,
+//   },
+// });

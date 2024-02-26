@@ -3,12 +3,24 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../../theme";
+import { useState , useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 export default function Setting() {
   const navigation = useNavigation();
+  const { theme, setTheme } = useContext(ThemeContext);
+  const [color, setColor] = useState(false);
+  const [form, setForm] = useState({
+    darkMode: false,
+  });
+  let activeColors = colors[theme.mode];
+  console.log(activeColors);
+
+  const backgroundColor = theme.mode === "dark" ? "#111827" : "#666f80";
+  const textColor = theme.mode === "dark" ? "black" : "white";
 
   const settingMenu = [
-    { icon: "user", title: "Profile", route: "ProfilePage" },
+    { icon: "user", title: "Profile", route: "ProfilePage"  },
     {
       icon: "info",
       title: "Contact Info",
@@ -20,7 +32,7 @@ export default function Setting() {
     { icon: "logout", title: "Logout", route: "Login" },
   ];
   return (
-    <View style={{ marginTop: 40 }}>
+    <View style={{ marginTop: 40,   }}>
       {settingMenu.map((item, index) => (
         <TouchableOpacity
           index={index}
@@ -35,9 +47,9 @@ export default function Setting() {
 
               paddingVertical: 24,
               marginTop: 10,
-              backgroundColor: "#c3c8d3",
+              
               borderRadius: 10,
-
+              backgroundColor: activeColors.primary,
               margin: 10,
               marginBottom: 12,
               borderRadius: 20,
@@ -51,7 +63,7 @@ export default function Setting() {
             />
             <Text
               style={{
-                color: "white",
+                Color: activeColors.secondary,
                 fontSize: 20,
                 fontWeight: "bold",
                 paddingLeft: 12,
@@ -67,3 +79,4 @@ export default function Setting() {
 }
 
 const styles = StyleSheet.create({});
+

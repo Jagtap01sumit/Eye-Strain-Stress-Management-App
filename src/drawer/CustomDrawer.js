@@ -1,3 +1,4 @@
+import React, { useContext, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,18 +7,13 @@ import {
   Animated,
   ImageBackground,
   Switch,
-  color,
-} from "react-native";
-import React, { useContext, useRef, useState } from "react";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import {
   TouchableOpacity,
-  GestureHandlerRootView,
   FlatList,
-} from "react-native-gesture-handler";
-
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-
+import FeatherIcon from "react-native-vector-icons/Feather";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Home from "./Screens/Home";
 import BlinkRate from "./Screens/BinkRate";
 import DigitalWellbeing from "./Screens/DigitalWellbeing";
@@ -25,6 +21,7 @@ import Distance from "./Screens/Distance";
 import Setting from "./Screens/Setting";
 import BlinkCount from "./Screens/BlinkCount";
 import { ThemeContext } from "../../context/ThemeContext";
+import { colors } from "../../theme";
 
 export default function CustomDrawer() {
   const menu = [
@@ -40,13 +37,8 @@ export default function CustomDrawer() {
   const moveToRight = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
 
-  
-  
-  const {theme,setTheme}=useContext(ThemeContext)
-  console.log(theme.mode)
-  const backgroundColor=theme.mode === "dark" ? "#111827" :"#666f80"
-  const textColor=theme.mode==="dark" ? "white" : "white"
-  const theme_icon=theme.mode=="dark"?'moon':'sun'
+  const navigation = useNavigation();
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -69,12 +61,14 @@ export default function CustomDrawer() {
     const newMode = theme.mode === "light" ? "dark" : "light";
     setTheme({ mode: newMode });
   };
+
+  const activeColors = colors[theme.mode];
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* menu design  */}
-      <View style={{ flex: 1, backgroundColor: `${backgroundColor}` }}>
+      <View style={{ flex: 1, backgroundColor: activeColors.primary }}>
         <View
-          style={{ width: "100", flexDirection: "row", alignItems: "center" }}
+          style={{ width: "100%", flexDirection: "row", alignItems: "center" }}
         >
           <Image
             source={require("../../assets/logo.png")}
@@ -84,12 +78,18 @@ export default function CustomDrawer() {
               borderRadius: 35,
               marginLeft: 10,
               marginTop: 30,
-              tintColor: "white",
+              // tintColor: "white",
             }}
           />
           <View>
             <View style={{ marginLeft: 10, marginTop: 20 }}>
-              <Text style={{ fontSize: 22, fontWeight: "800", color: `${textColor}` }}>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontWeight: "800",
+                  color: activeColors.tertiary,
+                }}
+              >
                 Eye Strain
               </Text>
               <Text
@@ -97,7 +97,7 @@ export default function CustomDrawer() {
                   fontSize: 12,
                   marginLeft: 0.8,
                   marginTop: 3,
-                  color: `${textColor}`
+                  color: activeColors.tertiary,
                 }}
               >
                 By BVCOE-IT
@@ -116,7 +116,9 @@ export default function CustomDrawer() {
                   marginLeft: 20,
                   marginTop: 20,
                   backgroundColor:
-                    selectedMenuItem === index ? "#fff" : "#c3c8d4",
+                    selectedMenuItem === index
+                      ? activeColors.secondary
+                      : activeColors.tertiary,
                   borderRadius: 10,
                   alignItems: "center",
                   flexDirection: "row",
@@ -126,14 +128,21 @@ export default function CustomDrawer() {
                 <AntDesign
                   name={item.icon}
                   size={24}
-                  color={selectedMenuItem === index ? "#000" : "#000"}
+                  color={
+                    selectedMenuItem === index
+                      ? activeColors.primary
+                      : activeColors.secondary
+                  }
                   style={{ marginLeft: 20 }}
                 />
                 <Text
                   style={{
                     fontSize: 18,
                     marginLeft: 20,
-                    color: selectedMenuItem == index ? "#000" : "#000",
+                    color:
+                      selectedMenuItem === index
+                        ? activeColors.primary
+                        : activeColors.econdary,
                   }}
                 >
                   {item.title}
@@ -147,11 +156,10 @@ export default function CustomDrawer() {
               alignItems: "center",
               justifyContent: "flex-start",
               height: 50,
-              backgroundColor: "#f2f2f2",
+              backgroundColor: activeColors.secondary,
               borderRadius: 8,
               width: 200,
               margin: 19,
-
               paddingLeft: 12,
               paddingRight: 12,
             }}
@@ -165,29 +173,28 @@ export default function CustomDrawer() {
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "black",
               }}
             >
-              <FeatherIcon  color="#000" name={theme_icon} size={20} />
+              <FeatherIcon
+                color={activeColors.tertiary}
+                name={theme.mode === "dark" ? "moon" : "sun"}
+                size={20}
+              />
             </View>
             <Text
               style={{
-                rowLabel: {
-                  fontSize: 17,
-                  fontWeight: "400",
-                  color: "white",
-                },
+                fontSize: 17,
+                fontWeight: "400",
+                color: activeColors.tertiary,
               }}
             >
               Dark Mode
             </Text>
-
             <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0 }} />
             <Switch onValueChange={toggleTheme} value={theme.mode === "dark"} />
           </View>
         </View>
       </View>
-      {/* home design  */}
       <Animated.View
         style={{
           flex: 1,
@@ -196,7 +203,6 @@ export default function CustomDrawer() {
           top: 0,
           left: 0,
           right: 0,
-
           bottom: 0,
           transform: [{ scale: scale }, { translateX: moveToRight }],
           borderRadius: showMenu ? 15 : 0,
@@ -213,13 +219,7 @@ export default function CustomDrawer() {
               <AntDesign name="menu-unfold" size={24} color="black" />
             )}
           </TouchableOpacity>
-          <Text
-            style={{
-              marginLeft: 20,
-              fontSize: 20,
-              fontWeight: "800",
-            }}
-          >
+          <Text style={{ marginLeft: 20, fontSize: 20, fontWeight: "800" }}>
             {menu[selectedMenuItem].title}
           </Text>
         </View>
@@ -236,7 +236,6 @@ export default function CustomDrawer() {
             {selectedMenuItem === 5 && <Setting />}
           </View>
         </ImageBackground>
-        {/* <BottomNavigation /> */}
       </Animated.View>
     </GestureHandlerRootView>
   );
