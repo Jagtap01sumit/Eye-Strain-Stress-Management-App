@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,11 @@ import { Audio } from "expo-av";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 export default function BlinkRate() {
-  const [isBlinkReminderOn, setBlinkReminder] = useState(false);
+  // const [isBlinkReminderOn, setBlinkReminder] = useState(false);
+  const { isBlinkReminderOn, setBlinkReminder } = useContext(ThemeContext);
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -176,7 +178,7 @@ export default function BlinkRate() {
           body: "It's time to take a break! Look at something 20 feet away for 20 seconds.",
         },
         trigger: {
-          seconds: 1 * 60, // Schedule the notification after 2 minutes
+          seconds: 1 * 60, // Schedule the notification after 1 minutes
         },
       });
     } catch (error) {
