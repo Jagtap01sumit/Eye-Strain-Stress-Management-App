@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -10,8 +10,10 @@ import {
   Image,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 export default function AppInfo() {
+  const { theme, setTheme } = useContext(ThemeContext);
   const [color, setColor] = useState(false);
   const [form, setForm] = useState({
     darkMode: false,
@@ -19,15 +21,21 @@ export default function AppInfo() {
     pushNotifications: false,
   });
 
+  const backgroundColor = theme.mode === "dark" ? "#111827" : "#666f80";
+  const textColor = theme.mode === "dark" ? "white" : "white";
+  const theme_icon = theme.mode == "dark" ? "moon" : "sun";
+
+  const toggleTheme = () => {
+    const newMode = theme.mode === "light" ? "dark" : "light";
+    setTheme({ mode: newMode });
+  };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0000" }}>
-      <View
-        style={{ backgroundColor: color ? "black" : "white", height: "100%" }}
-      >
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ backgroundColor: `${backgroundColor}`, height: "100%" }}>
         <View
           style={{
             padding: 24,
-            backgroundColor: color ? "black" : "white",
+            backgroundColor: `${backgroundColor}`,
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
@@ -61,14 +69,21 @@ export default function AppInfo() {
                 marginTop: 20,
                 fontSize: 19,
                 fontWeight: "600",
-                color: color ? "white" : "black",
+                color: `${textColor}`,
                 textAlign: "center",
               }}
             >
               John Doe
             </Text>
 
-            <Text style={styles.profileAddress}>
+            <Text
+              style={{
+                marginTop: 5,
+                fontSize: 16,
+                color: `${textColor}`,
+                textAlign: "center",
+              }}
+            >
               123 Maple Street. Anytown, PA 17101
             </Text>
           </View>
@@ -76,7 +91,18 @@ export default function AppInfo() {
 
         <ScrollView>
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Preferences</Text>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 12,
+                fontWeight: "600",
+                color: `${textColor}`,
+                textTransform: "uppercase",
+                letterSpacing: 1.1,
+              }}
+            >
+              Preferences
+            </Text>
 
             <TouchableOpacity
               onPress={() => {
@@ -104,7 +130,10 @@ export default function AppInfo() {
 
               <View style={styles.rowSpacer} />
 
-              <Switch onValueChange={() => setColor(!color)} value={color} />
+              <Switch
+                onValueChange={toggleTheme}
+                value={theme.mode === "dark"}
+              />
             </View>
 
             <TouchableOpacity onPress={() => {}} style={styles.row}>
@@ -155,7 +184,18 @@ export default function AppInfo() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Resources</Text>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 12,
+                fontWeight: "600",
+                color: `${textColor}`,
+                textTransform: "uppercase",
+                letterSpacing: 1.1,
+              }}
+            >
+              Resources
+            </Text>
 
             <TouchableOpacity
               onPress={() => {
@@ -216,7 +256,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   profileAvatar: {
-    marginTop:34,
+    marginTop: 34,
     width: 72,
     height: 72,
     borderRadius: 9999,
@@ -233,24 +273,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
   },
 
-  profileAddress: {
-    marginTop: 5,
-    fontSize: 16,
-    color: "#989898",
-    textAlign: "center",
-  },
   /** Section */
   section: {
     paddingHorizontal: 24,
   },
-  sectionTitle: {
-    paddingVertical: 12,
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#9e9e9e",
-    textTransform: "uppercase",
-    letterSpacing: 1.1,
-  },
+
   /** Row */
   row: {
     flexDirection: "row",
