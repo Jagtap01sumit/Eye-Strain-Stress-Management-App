@@ -70,38 +70,55 @@ export default function ProfileContent() {
       </View>
       <View style={{ marginTop: 50, margin: 10 }}>
         <View style={{ marginTop: 10 }}>
+<<<<<<< HEAD
           <Text style={{ fontSize: 24}}>User Name</Text>
           <Text>{userData?.username}</Text>
+=======
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>
+            User Name
+          </Text>
+          <Text style={{ color: activeColors.tint }}>{userData?.username}</Text>
+>>>>>>> 45e39421ff7363897032a3b8677e53318a7dc99e
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Email address</Text>
-          <Text>{email}</Text>
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>
+            Email address
+          </Text>
+          <Text style={{ color: activeColors.tint }}>{email}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Phone no.</Text>
-          <Text>{userData?.phone}</Text>
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>
+            Phone no.
+          </Text>
+          <Text style={{ color: activeColors.tint }}>{userData?.phone}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Age</Text>
-          <Text>{userData?.age}</Text>
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>Age</Text>
+          <Text style={{ color: activeColors.tint }}>{userData?.age}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Birthdate</Text>
-          <Text>{userData?.birthdate}</Text>
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>
+            Birthdate
+          </Text>
+          <Text style={{ color: activeColors.tint }}>
+            {userData?.birthdate}
+          </Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Gender</Text>
-          <Text>{userData?.gender}</Text>
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>Gender</Text>
+          <Text style={{ color: activeColors.tint }}>{userData?.gender}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 24 }}>Address</Text>
-          <Text>{userData?.address}</Text>
+          <Text style={{ fontSize: 24, color: activeColors.tint }}>
+            Address
+          </Text>
+          <Text style={{ color: activeColors.tint }}>{userData?.address}</Text>
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
       </View>

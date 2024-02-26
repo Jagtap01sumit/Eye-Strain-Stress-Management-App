@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { format } from "date-fns";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -21,13 +21,16 @@ import { RadioButton } from "react-native-paper";
 import { useForm, Controller, FormProvider } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
 import ProfileContent from "./ProfileContent";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../theme";
 
 export default function ProfilePage() {
+  const { theme } = useContext(ThemeContext);
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [birthdate, setBirthdate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-
+  let activeColors = colors[theme.mode];
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -85,7 +88,11 @@ export default function ProfilePage() {
 
   return (
     <ImageBackground
-      source={require("../../../assets/bg3.jpg")}
+      source={
+        theme.mode === "dark"
+          ? require("../../../assets/bg2.jpg")
+          : require("../../../assets/bg3.jpg")
+      }
       style={{ flex: 1, resizeMode: "cover" }}
     >
       <View
@@ -118,7 +125,7 @@ export default function ProfilePage() {
               position: "absolute",
               bottom: 0,
               height: 540,
-              backgroundColor: "white",
+              backgroundColor: activeColors.primary,
               width: "100%",
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
@@ -130,7 +137,7 @@ export default function ProfilePage() {
               <View style={{ marginTop: 8 }}>
                 <View style={{ flexDirection: "column" }}>
                   <View style={{ marginVertical: 4 }}>
-                    <Text>User name</Text>
+                    <Text style={{ color: activeColors.tint }}>User name</Text>
                   </View>
                   <Controller
                     control={control}
@@ -141,7 +148,13 @@ export default function ProfilePage() {
                           height: 40,
                           borderWidth: 0.4,
                           padding: 10,
+                          color: "white",
                           borderColor: "black",
+<<<<<<< HEAD
+=======
+                          backgroundColor: activeColors.secondary,
+
+>>>>>>> 45e39421ff7363897032a3b8677e53318a7dc99e
                           alignContent: "center",
                           borderRadius: 6,
                         }}
@@ -164,7 +177,7 @@ export default function ProfilePage() {
                 )}
                 <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
-                    <Text>Birthdate</Text>
+                    <Text style={{ color: activeColors.tint }}>Birthdate</Text>
                   </View>
                   <TouchableOpacity onPress={() => setShowDatePicker(true)}>
                     <View>
@@ -177,6 +190,7 @@ export default function ProfilePage() {
                               height: 40,
                               borderWidth: 0.4,
                               padding: 10,
+                              backgroundColor: activeColors.secondary,
                               borderColor: "black",
                               display: "flex",
                               alignContent: "center",
@@ -216,7 +230,9 @@ export default function ProfilePage() {
                 )}
                 <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
-                    <Text>Phone number</Text>
+                    <Text style={{ color: activeColors.tint }}>
+                      Phone number
+                    </Text>
                   </View>
                   <Controller
                     control={control}
@@ -228,7 +244,8 @@ export default function ProfilePage() {
                           borderWidth: 0.4,
                           padding: 10,
                           borderColor: "black",
-
+                          color: "white",
+                          backgroundColor: activeColors.secondary,
                           alignContent: "center",
                           borderRadius: 6,
                         }}
@@ -256,7 +273,7 @@ export default function ProfilePage() {
                 )}
                 <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
-                    <Text>Age</Text>
+                    <Text style={{ color: activeColors.tint }}>Age</Text>
                   </View>
                   <Controller
                     control={control}
@@ -265,10 +282,11 @@ export default function ProfilePage() {
                         style={{
                           width: 390,
                           height: 40,
+                          backgroundColor: activeColors.secondary,
                           borderWidth: 0.4,
                           padding: 10,
                           borderColor: "black",
-
+                          color: "white",
                           alignContent: "center",
                           borderRadius: 6,
                         }}
@@ -292,7 +310,7 @@ export default function ProfilePage() {
                 )}
                 <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
-                    <Text>Gender</Text>
+                    <Text style={{ color: activeColors.tint }}>Gender</Text>
                   </View>
                   <Controller
                     control={control}
@@ -330,7 +348,7 @@ export default function ProfilePage() {
                 )}
                 <View style={{ flexDirection: "column", marginTop: 1 }}>
                   <View style={{ marginVertical: 4 }}>
-                    <Text>Address</Text>
+                    <Text style={{ color: activeColors.tint }}>Address</Text>
                   </View>
                   <Controller
                     control={control}
@@ -342,7 +360,7 @@ export default function ProfilePage() {
                           borderWidth: 0.4,
                           padding: 10,
                           borderColor: "black",
-
+                          backgroundColor: activeColors.secondary,
                           alignContent: "center",
                           borderRadius: 6,
                         }}
