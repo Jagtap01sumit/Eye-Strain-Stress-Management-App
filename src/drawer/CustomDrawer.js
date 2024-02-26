@@ -66,7 +66,7 @@ export default function CustomDrawer() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: activeColors.primary }}>
+      <View style={{ flex: 1, backgroundColor: activeColors.secondary }}>
         <View
           style={{ width: "100%", flexDirection: "row", alignItems: "center" }}
         >
@@ -78,7 +78,7 @@ export default function CustomDrawer() {
               borderRadius: 35,
               marginLeft: 10,
               marginTop: 30,
-              // tintColor: "white",
+              tintColor: activeColors.tertiary,
             }}
           />
           <View>
@@ -117,8 +117,8 @@ export default function CustomDrawer() {
                   marginTop: 20,
                   backgroundColor:
                     selectedMenuItem === index
-                      ? activeColors.secondary
-                      : activeColors.tertiary,
+                      ? activeColors.tertiary
+                      : activeColors.primary,
                   borderRadius: 10,
                   alignItems: "center",
                   flexDirection: "row",
@@ -131,7 +131,7 @@ export default function CustomDrawer() {
                   color={
                     selectedMenuItem === index
                       ? activeColors.primary
-                      : activeColors.secondary
+                      : activeColors.tertiary
                   }
                   style={{ marginLeft: 20 }}
                 />
@@ -142,7 +142,7 @@ export default function CustomDrawer() {
                     color:
                       selectedMenuItem === index
                         ? activeColors.primary
-                        : activeColors.econdary,
+                        : activeColors.tertiary,
                   }}
                 >
                   {item.title}
@@ -156,7 +156,7 @@ export default function CustomDrawer() {
               alignItems: "center",
               justifyContent: "flex-start",
               height: 50,
-              backgroundColor: activeColors.secondary,
+              backgroundColor: activeColors.primary,
               borderRadius: 8,
               width: 200,
               margin: 19,

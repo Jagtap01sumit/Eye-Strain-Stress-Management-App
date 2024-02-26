@@ -11,6 +11,6 @@ export const colors = {
     secondary: "#111827",
     tertiary: "#d1d5db",
     accent: "#0891b2",
-    tint: "#111827",
+    tint: "#f9fafb",
   },
 };

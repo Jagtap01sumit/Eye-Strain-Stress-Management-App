@@ -1,8 +1,13 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, FlatList, LogBox } from "react-native";
+import React, { useContext } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../theme";
 
 export default function DigitalWellbeing() {
+  const { theme } = useContext(ThemeContext);
+  let activeColors = colors[theme.mode];
+  console.log(activeColors.tint);
   const lineValue = [
     {
       platform: "whatsapp",
@@ -54,21 +59,29 @@ export default function DigitalWellbeing() {
     },
   ];
 
+  //card
   const renderItem = ({ item }) => (
     <View style={{ marginTop: 10 }}>
-      <View style={styles.itemContainer}>
+      <View
+        style={[
+          styles.itemContainer,
+          { backgroundColor: activeColors.secondary },
+        ]}
+      >
         <FontAwesome name={item.icon} size={50} color={item.color} />
         <View style={styles.itemContent}>
-          <Text style={styles.platformText}>{item.platform}</Text>
+          <Text style={[styles.platformText, { color: activeColors.tint }]}>
+            {item.platform}
+          </Text>
           <View
             style={{
               width: `${item.value}%`,
               height: 3,
-              backgroundColor: "black",
+              backgroundColor: activeColors.tint,
             }}
           ></View>
           <View style={{ marginVertical: 10 }}>
-            <Text>{item.content}</Text>
+            <Text style={{ color: activeColors.tint }}>{item.content}</Text>
           </View>
         </View>
       </View>
