@@ -20,11 +20,13 @@ import BlinkRate from "./Screens/BinkRate";
 import DigitalWellbeing from "./Screens/DigitalWellbeing";
 import Distance from "./Screens/Distance";
 import Setting from "./Screens/Setting";
+import BlinkCount from "./Screens/BlinkCount";
 
 export default function CustomDrawer() {
   const menu = [
     { icon: "home", title: "Home" },
-    { icon: "home", title: "Blink Rate" },
+    // { icon: "home", title: "Blink Rate" },
+    { icon: "home", title: "Blink Count" },
     { icon: "home", title: "Distance" },
     { icon: "home", title: "DigitalWellbeing" },
     { icon: "logout", title: "Setting" },
@@ -167,7 +169,8 @@ export default function CustomDrawer() {
         >
           <View style={{ backgroundColor: "transparent" }}>
             {selectedMenuItem === 0 && <Home />}
-            {selectedMenuItem === 1 && <BlinkRate />}
+            {/* {selectedMenuItem === 1 && <BlinkRate />} */}
+            {selectedMenuItem === 1 && <BlinkCount />}
             {selectedMenuItem === 2 && <Distance />}
             {selectedMenuItem === 3 && <DigitalWellbeing />}
             {selectedMenuItem === 4 && <Setting />}

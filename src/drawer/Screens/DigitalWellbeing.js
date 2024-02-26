@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
   itemContent: {
     display: "flex",
     // alignItems: "center",
-    margin: 5,
-    padding: 5,
+    margin: 3,
+    padding: 3,
     justifyContent: "center",
   },
   platformText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "800",
     marginVertical: 10,
     // margin: 10,
