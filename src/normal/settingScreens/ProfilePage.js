@@ -150,11 +150,8 @@ export default function ProfilePage() {
                           padding: 10,
                           color: "white",
                           borderColor: "black",
-<<<<<<< HEAD
-=======
                           backgroundColor: activeColors.secondary,
 
->>>>>>> 45e39421ff7363897032a3b8677e53318a7dc99e
                           alignContent: "center",
                           borderRadius: 6,
                         }}
@@ -162,6 +159,7 @@ export default function ProfilePage() {
                         onChangeText={(value) => onChange(value)}
                         value={value}
                         placeholder="john01John"
+                    
                       />
                     )}
                     name="username"
@@ -315,7 +313,7 @@ export default function ProfilePage() {
                   <Controller
                     control={control}
                     render={({ field: { onChange, value } }) => (
-                      <View style={{ flexDirection: "row" }}>
+                      <View style={{ flexDirection: "row"}}>
                         <RadioButton.Item
                           label="Male"
                           value="male"

@@ -70,15 +70,10 @@ export default function ProfileContent() {
       </View>
       <View style={{ marginTop: 50, margin: 10 }}>
         <View style={{ marginTop: 10 }}>
-<<<<<<< HEAD
-          <Text style={{ fontSize: 24}}>User Name</Text>
-          <Text>{userData?.username}</Text>
-=======
           <Text style={{ fontSize: 24, color: activeColors.tint }}>
             User Name
           </Text>
           <Text style={{ color: activeColors.tint }}>{userData?.username}</Text>
->>>>>>> 45e39421ff7363897032a3b8677e53318a7dc99e
           <View style={{ borderWidth: 0.5, marginVertical: 13 }}></View>
         </View>
         <View style={{ marginTop: 10 }}>
