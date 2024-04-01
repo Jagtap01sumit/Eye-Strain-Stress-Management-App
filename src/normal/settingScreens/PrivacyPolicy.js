@@ -324,7 +324,7 @@ const PrivacyPolicy = () => {
                 color: activeColors.tertiary,
               }}
             >
-              This Privacy Policy was last updated on [insert date]. Any changes
+              This Privacy Policy was last updated on 01 Apr 2024. Any changes
               to this policy will be reflected on this page, and the revised
               version will become effective immediately upon posting. We
               encourage you to review this Privacy Policy periodically to stay
