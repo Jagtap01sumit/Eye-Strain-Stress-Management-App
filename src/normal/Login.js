@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, Image, TextInput, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -10,14 +10,16 @@ import {
   Entypo,
 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemeContext } from "../../context/ThemeContext";
 export default function Login() {
   const methods = useForm();
   const navigation = useNavigation();
   const { control, handleSubmit, formState, setError } = methods;
+  const { email, setEmail } = useContext(ThemeContext);
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://192.168.29.34:8000/login", {
+      const response = await fetch("http://192.168.0.102:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,14 +30,12 @@ export default function Login() {
       if (response.ok) {
         const userEmail = data.email;
 
-        await AsyncStorage.setItem("userEmail", userEmail);
+        setEmail(userEmail);
 
-        const storedUserEmail = await AsyncStorage.getItem("userEmail");
-        console.log(storedUserEmail, "store");
         methods.reset();
 
-        // Navigate to "CustomDrawer" screen with userEmail as a parameter
-        navigation.navigate("CustomDrawer", { userEmail: storedUserEmail });
+        console.log(email);
+        navigation.navigate("CustomDrawer");
       } else {
         const responseData = await response.json();
         setError("message", {

@@ -13,13 +13,23 @@ import AppInfo from "./src/normal/settingScreens/AppInfo";
 import Setting from "./src/drawer/Screens/Setting";
 import BlinkRate from "./src/drawer/Screens/BinkRate";
 import { ThemeContext } from "./context/ThemeContext";
+import PrivacyPolicy from "./src/normal/settingScreens/PrivacyPolicy";
 export default function App() {
   const Stack = createStackNavigator();
   const [theme, setTheme] = useState({ mode: "dark" });
   const [isBlinkReminderOn, setBlinkReminder] = useState(false);
+  const [email, setEmail] = useState("");
+
   return (
     <ThemeContext.Provider
-      value={{ theme, setTheme, isBlinkReminderOn, setBlinkReminder }}
+      value={{
+        theme,
+        setTheme,
+        isBlinkReminderOn,
+        setBlinkReminder,
+        email,
+        setEmail,
+      }}
     >
       <NavigationContainer>
         <Stack.Navigator>
@@ -62,6 +72,11 @@ export default function App() {
           <Stack.Screen
             name="BlinkRate"
             component={BlinkRate}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PrivacyPolicy"
+            component={PrivacyPolicy}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

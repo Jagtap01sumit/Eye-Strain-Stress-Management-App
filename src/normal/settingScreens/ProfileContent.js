@@ -5,19 +5,20 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { colors } from "../../../theme";
 
 export default function ProfileContent() {
+  const { email, setEmail } = useContext(ThemeContext);
   const [userData, setUserData] = useState(null);
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const { theme } = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("User Email:", userEmail);
-        const userEmail = await AsyncStorage.getItem("userEmail");
-        setEmail(userEmail);
+        console.log("User Email:", email);
+        const userEmail = email;
+        // const userEmail = await AsyncStorage.getItem("userEmail");
         const response = await fetch(
-          `http://192.168.29.34:8000/getData?email=${userEmail}`
+          `http://192.168.0.102:8000/getData?email=${userEmail}`
         );
 
         console.log("Response Status:", response.status);
@@ -40,7 +41,8 @@ export default function ProfileContent() {
 
   const myFunction = async () => {
     try {
-      const Email = await AsyncStorage.getItem("userEmail");
+      // const Email = await AsyncStorage.getItem("userEmail");
+      const Email = email;
       console.log(Email); // Log or use Email within this function
       return Email; // If you want to return it
     } catch (error) {
@@ -50,18 +52,21 @@ export default function ProfileContent() {
   };
 
   // Usage
+  console.log(userData?.gender === "male", "gender");
 
   return (
     <View>
       <View style={{ display: "flex", alignItems: "center" }}>
-        <View onPress={() => {}}>
+        <View>
           <View style={{ position: "relative" }}>
             <Image
               alt=""
               source={{
                 uri:
                   userData?.profileImage ||
-                  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80", // Replace with the actual field name from your API
+                  (userData?.gender === "female"
+                    ? "https://avatar.iran.liara.run/public/girl"
+                    : "https://avatar.iran.liara.run/public/boy"),
               }}
               style={{ width: 160, height: 160, borderRadius: 9999 }}
             />

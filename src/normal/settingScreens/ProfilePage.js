@@ -53,13 +53,13 @@ export default function ProfilePage() {
     formState: { errors },
   } = methods;
   const [refreshKey, setRefreshKey] = useState(0);
+  const { email } = useContext(ThemeContext);
   const onSubmit = async (data) => {
     try {
-      const userEmail = await AsyncStorage.getItem("userEmail");
-      //NOTE: email which stored in local storage at a time of login which will be send to the db of Profile.
+      const userEmail = email;
 
       data.email = userEmail;
-      const response = await fetch("http://192.168.29.34:8000/addData", {
+      const response = await fetch("http://192.168.0.102:8000/addData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

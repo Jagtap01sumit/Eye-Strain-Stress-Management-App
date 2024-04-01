@@ -8,7 +8,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 
 export default function Setting() {
   const navigation = useNavigation();
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme, setEmail } = useContext(ThemeContext);
   const [color, setColor] = useState(false);
   const [form, setForm] = useState({
     darkMode: false,
@@ -25,7 +25,7 @@ export default function Setting() {
     },
     { icon: "lock", title: "Password", route: "AppInfo" },
 
-    { icon: "lock", title: "Privacy Policy", route: "AppInfo" },
+    { icon: "lock", title: "Privacy Policy", route: "PrivacyPolicy" },
     { icon: "logout", title: "Logout", route: "Login" },
   ];
   return (
