@@ -26,4 +26,3 @@ const CountView = ({ blinkCount }) => {
 };
 
 export default CountView;
-

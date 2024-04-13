@@ -1,13 +1,17 @@
 // BlinkCount.js
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Camera } from 'expo-camera';
-import * as FaceDetector from 'expo-face-detector';
-import CountView from './CountView';
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, View } from "react-native";
+import { Camera } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
+import CountView from "./CountView";
+import * as FileSystem from "expo-file-system";
+import { Form } from "react-hook-form";
 
 export default function BlinkCount() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
+  const cameraRef = useRef(null);
+
   const [faceData, setFaceData] = useState([]);
   const [blinkCount, setBlinkCount] = useState(0);
   const [isBlinking, setIsBlinking] = useState(false);
@@ -15,57 +19,66 @@ export default function BlinkCount() {
   useEffect(() => {
     const setupCamera = async () => {
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === 'granted');
+      setHasCameraPermission(cameraStatus.status === "granted");
     };
 
     setupCamera();
   }, []);
 
-  const calculateBlinkCount = (face) => {
-    if (face && face.bounds) {
-      const bounds = face.bounds;
-  
-      // Calculate aspect ratio of the bounding box
-      const boundingBoxAspectRatio = bounds.size.width / bounds.size.height;
-  
-      // Adjust the threshold values as needed
-      if (boundingBoxAspectRatio < 0.5 && !isBlinking) {
-        setBlinkCount((prevCount) => prevCount + 1);
-        setIsBlinking(true);
-      } else if (boundingBoxAspectRatio >= 0.5 && isBlinking) {
-        setIsBlinking(false);
-      }
-    }
-  };
-  
-
-  const handleFacesDetected = ({ faces }) => {
-    if (faces && faces.length > 0) {
-      setFaceData(faces);
-
-      const face = faces[0];
-      console.log(face);
-      if (face) {
-        calculateBlinkCount(face);
-      }
+  const handleFacesDetected = async ({ faces }) => {
+    if (faces.length > 0) {
+      const photo = await cameraRef.current.takePictureAsync();
+      sendImageToServer(photo.uri);
     }
   };
 
-  const distance = (point1, point2) => {
-    return Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2));
+  const sendImageToServer = async (imageUri) => {
+    try {
+      console.log(imageUri);
+      const formData = new FormData();
+      formData.append("face", {
+        uri: imageUri,
+        name: imageUri.split("/").pop(),
+        type: "image/*",
+      });
+      const response = await fetch("http://192.168.0.139:5000/camera", {
+        method: "post",
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+        body: formData,
+      });
+      const serverResponse = await response.text();
+      setBlinkCount(parseInt(serverResponse));
+    } catch (error) {
+      console.error("Error sending image to server:", error);
+      Alert.alert("Error", "Failed to send image to server");
+    }
   };
+
+  useEffect(() => {
+    console.log(blinkCount);
+  }, [blinkCount]);
+
+  const getImageData = async (imageUri) => {
+    const response = await fetch(imageUri);
+    const blob = await response.blob();
+    console.log(imageUri);
+    return blob;
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.cameraContainer}>
         <Camera
-          ref={(ref) => setCamera(ref)}
+          ref={cameraRef}
           style={styles.fixedRatio}
           type={Camera.Constants.Type.front}
-          ratio={'1:1'}
+          ratio={"1:1"}
           onFacesDetected={handleFacesDetected}
           faceDetectorSettings={{
             mode: FaceDetector.FaceDetectorMode.fast,
-            detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+            detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
             runClassifications: FaceDetector.FaceDetectorClassifications.none,
             minDetectionInterval: 100,
             tracking: true,
@@ -80,7 +93,7 @@ export default function BlinkCount() {
 const styles = StyleSheet.create({
   cameraContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   fixedRatio: {
     flex: 1,
